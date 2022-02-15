@@ -1,4 +1,5 @@
 let synth = null;
+let sampler = null;
 
 const button = document.querySelector('button');
 button.addEventListener('click', async () => {
@@ -7,6 +8,17 @@ button.addEventListener('click', async () => {
     console.log('audio is ready');
     synth = new Tone.Synth().toDestination();
     synth.oscillator.type = 'square';
+    const reverb = new Tone.Reverb({
+        wet: 0.3,
+    }).toDestination();
+    sampler = new Tone.Sampler({
+        urls: {
+            'C3': 'Kick01.wav',
+            'C#3': 'Snare01.wav',
+            'D3': 'Closedhat01.wav',
+        },
+        baseUrl: '/assets/sounds/',
+    }).connect(reverb);
 });
 
 function onMidiMessage(event) {
@@ -18,6 +30,11 @@ function onMidiMessage(event) {
             synth.triggerAttack(Tone.Frequency(event.data[1], 'midi'), 0, event.data[2] / 127);
         } else if (event.data[0] >> 4 === 8) {
             synth.triggerRelease();
+        }
+    } else if (channel === 1) {
+        if (event.data[0] >> 4 === 9) {
+            if (sampler === null) return;
+            sampler.triggerAttackRelease(Tone.Frequency(event.data[1], 'midi').toNote());
         }
     }
 }
