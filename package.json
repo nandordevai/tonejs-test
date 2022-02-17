@@ -1,0 +1,26 @@
+{
+  "name": "tonejs-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nandordevai/tonejs-test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nandordevai/tonejs-test/issues"
+  },
+  "homepage": "https://github.com/nandordevai/tonejs-test#readme",
+  "devDependencies": {
+    "electron": "^17.0.1",
+    "electron-reload": "^2.0.0-alpha.1"
+  },
+  "dependencies": {
+    "tone": "^14.7.77"
+  }
+}
